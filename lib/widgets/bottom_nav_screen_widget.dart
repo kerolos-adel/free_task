@@ -6,7 +6,7 @@ List<BottomNavigationBarItem> bottomNavItems =  <BottomNavigationBarItem>[
     label: 'Home',
   ),
   BottomNavigationBarItem(
-    icon: Image.asset("assets/images/dashboard_customize.png"),
+    icon: Image.asset("assets/images/6.png"),
     label: 'Assets',
   ),
   const BottomNavigationBarItem(

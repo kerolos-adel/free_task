@@ -6,7 +6,7 @@ tabsController(){
       child: Column(
         children: [
           TabBar(tabs: [
-            Tab(child: tabs(text: "Categories")),
+            Tab(child: tabs(text: "Users")),
             Tab(child: tabs(text: "Services")),
             Tab(child: tabs(text: "Orders(0)"))
           ])

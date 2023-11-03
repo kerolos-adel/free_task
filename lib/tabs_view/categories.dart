@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../models/users_model.dart';
+import '../services/get_users.dart';
+import '../widgets/custom_card.dart';
+
 class Categories extends StatelessWidget {
   const Categories({Key? key}) : super(key: key);
 
@@ -7,43 +11,31 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Categories View"),
+          title: const Text("Users View"),
           actions: const [Padding(padding: EdgeInsets.only(right: 10),child: Text("see all"),)],
         ),
-        body: Column(
-          children: [
-            categoriesView(image: "assets/images/1.png", text: "Constructions"),
-            categoriesView(image: "assets/images/3.png", text: "Insurances"),
-            categoriesView(image: "assets/images/2.png", text: "Legal"),
-            categoriesView(image: "assets/images/4.png", text: "Buy & Sell"),
-            categoriesView(image: "assets/images/5.png", text: "Accounting Services"),
-
-          ],
-        ));
+        body: Padding(
+            padding: const EdgeInsets.all(15),
+            child: FutureBuilder<List<UserModel>>(
+              future: AllUsers().getAllUsers(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  print("has data");
+                  List <UserModel>users = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: users.length,
+                    itemBuilder: (context, index) {
+                      return CustomCard(user: users[index],);
+                    },
+                  );
+                }
+                else{
+                  print("${snapshot.error}");
+                  return const Center(child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            )));
   }
 }
 
-categoriesView({required String image, required String text}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 12),
-    child: Row(
-      children: [
-        Image.asset(
-          image,
-        ),
-        const Spacer(
-          flex: 1,
-        ),
-        Text(
-          text,
-          style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
-        ),
-        const Spacer(
-          flex: 20,
-        ),
-        IconButton(
-            onPressed: () {}, icon: const Icon(Icons.arrow_forward_sharp))
-      ],
-    ),
-  );
-}
